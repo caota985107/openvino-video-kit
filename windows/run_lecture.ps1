@@ -39,9 +39,9 @@ Write-Host "`n=== [3/5] 旁白語音（Piper）==="
 & $py "scripts\03_tts_piper.py" "work\script.json" "work\audio"
 
 Write-Host "`n=== [4/5] 投影片 → PNG ==="
-& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "slides_to_png.ps1") -Pptx $Pptx -Out "work\slides"
+& (Join-Path $PSScriptRoot "slides_to_png.ps1") -Pptx $Pptx -Out "work\slides"
 
 Write-Host "`n=== [5/5] 合成影片（ffmpeg）==="
-& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "build_video.ps1") -Slides "work\slides" -Audio "work\audio" -Out "work\final.mp4" -Ffmpeg $Ffmpeg
+& (Join-Path $PSScriptRoot "build_video.ps1") -Slides "work\slides" -Audio "work\audio" -Out "work\final.mp4" -Ffmpeg $Ffmpeg
 
 Write-Host "`n完成 → work\final.mp4"

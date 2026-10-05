@@ -16,8 +16,18 @@ from pathlib import Path
 
 from piper import PiperVoice
 
-DEFAULT_VOICE = "models/piper/zh_CN-huayan-medium.onnx"
+DEFAULT_VOICE_CANDIDATES = [
+    "models/piper/zh_CN-huayan-medium.onnx",   # 離線包/USB 位置
+    "assets/piper/zh_CN-huayan-medium.onnx",   # repo（GitHub 下載）位置
+]
 SAMPLE_RATE_DEFAULT = 22050
+
+
+def resolve_default_voice() -> str:
+    for c in DEFAULT_VOICE_CANDIDATES:
+        if Path(c).exists():
+            return c
+    return DEFAULT_VOICE_CANDIDATES[0]
 
 
 def synth_to_wav(voice, text: str, out_path: Path, sample_rate: int):
@@ -46,8 +56,11 @@ def main():
     ap = argparse.ArgumentParser(description="script.json → audio/NN.wav（Piper TTS）")
     ap.add_argument("script", nargs="?", default="script.json")
     ap.add_argument("outdir", nargs="?", default="audio")
-    ap.add_argument("--voice", default=DEFAULT_VOICE, help="Piper onnx 模型路徑")
+    ap.add_argument("--voice", default=None, help="Piper onnx 模型路徑（預設自動找 models/piper 或 assets/piper）")
     args = ap.parse_args()
+
+    if args.voice is None:
+        args.voice = resolve_default_voice()
 
     items = json.loads(Path(args.script).read_text(encoding="utf-8"))
     out_dir = Path(args.outdir)

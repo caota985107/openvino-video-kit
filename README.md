@@ -6,7 +6,7 @@
 > 外加：Stable Diffusion 出圖（低配/高配）、SVD 圖生影片（OpenVINO notebook + 腳本）
 
 - ✅ **全程不碰雲端、不需要 GPU**：OpenVINO 在 CPU 上跑
-- ✅ **公司無網路可用**：在家把 USB 包做好 → 公司插上就能跑（免管理員權限）
+- ✅ **公司環境可用**：不能 USB、不能上 HuggingFace 也沒關係——程式碼走 repo、模型與環境走 GitHub Releases（免登入）
 - ✅ **低配 low / 高配 high 兩種模式**，都是「分鐘級」可行（不是跑一個禮拜的那種）
 
 ---
@@ -23,7 +23,7 @@
 > 出圖時間為 FastSD CPU 官方於 i7-12700 的實測級距（13600K 相近）；SVD 為估算，第一次請先跑 low 量實際時間。
 >
 > **只做影片、講稿走公司管道？** 日常主力就是 `sd_low`（SD-Turbo）與 `sd_high`（SDXL-Lightning）兩顆；`models\Qwen*` 只有「本地生成講稿」才需要（可刪，省 7GB）。
-> 自備講稿：`python scripts/08_import_script.py 講稿.txt work\slides.json work\script.json`，或直接 `run_lecture.ps1 -Pptx deck.pptx -ScriptFile 講稿.txt`。跑不動的模型（LTX-Video、Wan）完全沒有放進本包。
+> 自備講稿：`python scripts/08_import_script.py 講稿.txt work\slides.json work\script.json`，或直接 `run_lecture.ps1 -Pptx deck.pptx -ScriptFile 講稿.txt`（講稿可讓 Claude Code 照 [PREPARE.md](PREPARE.md) 用你的 PPT 產生）。跑不動的模型（LTX-Video、Wan）完全沒有放進本包。
 
 ---
 

@@ -48,6 +48,35 @@ powershell -ExecutionPolicy Bypass -File windows\run_lecture.ps1 -Pptx C:\簡報
 
 講稿格式：純文字，一段一頁（空行分段，或每段前後加 `---`；也可用 `1.`「第1頁」標記）。
 
+## 資安／IT 常見問題
+
+### Q: `powershell -ExecutionPolicy Bypass` 會不會被 IT 盯上？
+
+- 這個參數只影響**該次 PowerShell 行程**：不改系統設定、不需管理員權限、不會常駐。微軟官方定位：執行原則不是安全邊界（只是防呆），所以它不算「繞過資安」的工具。
+- 公司若有 EDR／PowerShell 指令稽核，log 裡可能出現這個字串（內容都只是解壓、複製、跑 AI 模型，屬正常用途）；沒有稽核的環境等於零痕跡。
+- **想完全避開這個字串**：
+  1. 開 PowerShell 視窗輸入 `Get-ExecutionPolicy -List`（純查詢指令，不執行腳本）。
+  2. 若 CurrentUser 或 LocalMachine 顯示 `RemoteSigned`／`Unrestricted`：**根本不需要 Bypass**——把下載的 ZIP 先「右鍵 → 內容 → 勾選『解除封鎖』」再解壓，之後直接 `powershell -File windows\run_lecture.ps1 ...` 即可。
+  3. 若顯示 `Restricted`（或公司以 GPO 強制）：腳本得用 `-ExecutionPolicy Bypass` 才能跑（GPO 強制時連 Bypass 也無效，只能請 IT 開權限）。
+- 附帶一提：10.6GB 的下載流量在企業網路本來就可見，這與 Bypass 無關；照實當一般業務流量看待即可。
+
+### 不用 PowerShell 的替代路線（幾乎等價）
+
+只有「PPT→PNG」這一步原本靠 PowerShell 呼叫 PowerPoint COM；整條流程可以完全不開 PowerShell：
+
+```bat
+python\python.exe scripts\01_extract_ppt.py 簡報.pptx work\slides.json
+python\python.exe scripts\08_import_script.py 講稿.txt work\slides.json work\script.json
+python\python.exe scripts\03_tts_piper.py work\script.json work\audio
+
+REM PPT→PNG（手動）：PowerPoint 開簡報 → 檔案 → 匯出 → 變更檔案類型 → PNG →
+REM   解析度選 1920×1080 → 選「所有投影片」→ 存到 work\slides
+python\python.exe scripts\rename_slides.py work\slides
+
+set PATH=%CD%\ffmpeg\bin;%PATH%
+scripts\05_build_video.bat work\slides work\audio work\final.mp4
+```
+
 ## 疑難排解
 
 - **下載很慢/斷線**：直接重跑腳本（會續傳）；BITS 失敗時會自動改用 WebClient。
