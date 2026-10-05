@@ -7,6 +7,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$Pptx,
     [ValidateSet("low", "high")][string]$Profile = "high",
+    [string]$ScriptFile = "",     # 自備講稿（.txt）—公司已有講稿管道時用；給了就跳過本地 LLM
     [string]$Root = "",
     [string]$Ffmpeg = ""
 )
@@ -26,8 +27,13 @@ New-Item -ItemType Directory -Force "work" | Out-Null
 Write-Host "`n=== [1/5] 抽取 PPT 文字 ==="
 & $py "scripts\01_extract_ppt.py" $Pptx "work\slides.json"
 
-Write-Host "`n=== [2/5] 生成講稿（$Profile）==="
-& $py "scripts\02_generate_script.py" "work\slides.json" "work\script.json" --profile $Profile
+if ($ScriptFile) {
+    Write-Host "`n=== [2/5] 匯入外部講稿（公司管道）==="
+    & $py "scripts\08_import_script.py" $ScriptFile "work\slides.json" "work\script.json"
+} else {
+    Write-Host "`n=== [2/5] 生成講稿（本地 LLM，profile=$Profile）==="
+    & $py "scripts\02_generate_script.py" "work\slides.json" "work\script.json" --profile $Profile
+}
 
 Write-Host "`n=== [3/5] 旁白語音（Piper）==="
 & $py "scripts\03_tts_piper.py" "work\script.json" "work\audio"

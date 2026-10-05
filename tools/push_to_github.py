@@ -110,7 +110,7 @@ def create_repo(name=DEFAULT_REPO):
             {
                 "name": name,
                 "description": "Windows-first offline AI video kit (OpenVINO, Intel CPU): PPT → 講稿 → TTS → MP4, low/high profiles, SVD video notebook.",
-                "private": False,
+                "private": True,  # 隱私優先：預設 private（要公開改這裡或到 repo Settings 一鍵切換）
                 "has_issues": True,
             },
         )

@@ -21,6 +21,9 @@
 | 旁白 TTS | Piper zh_CN-huayan-medium（兩者相同） | 同左 |
 
 > 出圖時間為 FastSD CPU 官方於 i7-12700 的實測級距（13600K 相近）；SVD 為估算，第一次請先跑 low 量實際時間。
+>
+> **只做影片、講稿走公司管道？** 日常主力就是 `sd_low`（SD-Turbo）與 `sd_high`（SDXL-Lightning）兩顆；`models\Qwen*` 只有「本地生成講稿」才需要（可刪，省 7GB）。
+> 自備講稿：`python scripts/08_import_script.py 講稿.txt work\slides.json work\script.json`，或直接 `run_lecture.ps1 -Pptx deck.pptx -ScriptFile 講稿.txt`。跑不動的模型（LTX-Video、Wan）完全沒有放進本包。
 
 ---
 
