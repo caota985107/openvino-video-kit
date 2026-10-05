@@ -87,8 +87,10 @@ def main():
     rid = rel["id"]
     existing = {a["name"]: a["size"] for a in api("GET", f"{rel_api}/{rid}/assets?per_page=100")}
 
+    MAX_ASSET = 2 * 1024 * 1024 * 1024 - 65536  # GitHub 單檔 <2GB
     files = [p for p in sorted(ASSETS_DIR.iterdir())
-             if p.is_file() and not p.name.startswith("_")]
+             if p.is_file() and not p.name.startswith("_")
+             and p.stat().st_size < MAX_ASSET]
     # 先傳小的（CHECKSUMS / manifest），讓公司端能立刻做連通性測試
     files.sort(key=lambda p: p.stat().st_size)
 
