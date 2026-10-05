@@ -49,20 +49,21 @@ python3 tools/bundle_prepare.py                          # 抓可攜 Python + Wi
 # 完成後：bundle/ 就是 USB 包內容（複製到 USB）
 ```
 
-### 公司端（無網路）
+### 公司端（不能 USB、不能 HuggingFace → 全部走 GitHub）
 
+適用：公司電腦只能連 GitHub（免登入可讀）。
 ```powershell
-# 把 USB 的 openvino-kit 放任意位置（例：D:\openvino-kit）
-cd D:\openvino-kit
-powershell -ExecutionPolicy Bypass -File install_offline.ps1   # （或雙擊 install_offline.bat）
-# 安裝 = 把 pylibs 複製進可攜 Python，不需要網路/管理員權限
-
-# 產影片：
-powershell -ExecutionPolicy Bypass -File windows\run_lecture.ps1 -Pptx C:\path\deck.pptx -Profile high
-# 成品：work\final.mp4（中間產物在 work\：slides.json / script.json / audio\ / slides\）
+# 1) repo 頁「Code → Download ZIP」→ 解壓（例：D:\openvino-kit）
+# 2) 一鍵抓模型＋執行環境（來源＝GitHub Releases，約 10.6GB，可中斷重跑）
+powershell -ExecutionPolicy Bypass -File tools\company_fetch_and_setup.ps1
+# 3) 產影片
+powershell -ExecutionPolicy Bypass -File windows\run_lecture.ps1 -Pptx C:\簡報.pptx -ScriptFile C:\講稿.txt
+# 成品：work\final.mp4
 ```
+連通性測試與疑難排解：[docs/COMPANY-DOWNLOAD.md](docs/COMPANY-DOWNLOAD.md)。
+（備用）若哪天能用 USB：`install_offline.bat` 走既有離線包流程。
 
-**產影片流程**：①抽 PPT 文字 → ②本地 LLM 生成每頁講稿 → ③Piper 中文旁白 → ④投影片轉 PNG（PowerPoint COM）→ ⑤ffmpeg 合成。講稿記得人工審一遍（2 分鐘）。
+**產影片流程**：①抽 PPT 文字 → ②講稿（公司管道提供，或加 `--profile high` 讓本地 LLM 生成）→ ③Piper 中文旁白 → ④投影片轉 PNG（PowerPoint COM）→ ⑤ffmpeg 合成。講稿記得審一遍（2 分鐘）。
 
 ---
 

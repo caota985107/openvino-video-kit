@@ -19,4 +19,9 @@ venv/
 # 大資產（ffmpeg zip 等；若上傳可行再手動加回）
 assets/*.zip
 assets/*.tar.gz
+!assets/python-win-x86_64.tar.gz
 assets/uv*.zip
+
+# Release 打包產物（本機用）
+release_assets/
+_dl/
