@@ -109,6 +109,7 @@ openvino-video-kit/
 ## 常見問題
 
 - **公司電腦裝不了東西？** 本包全走可攜：Python、套件、模型、ffmpeg 都在同一資料夾，複製就能跑、免管理員權限。
+- **USB 格式**：請用 exFAT / NTFS（模型有單檔超過 4GB，FAT32 放不下）。
 - **公司沒有 PowerPoint？** `slides_to_png.ps1` 走 PowerPoint COM；沒有就改用 LibreOffice 路線（`scripts/04_slides_to_png.sh`）或手動「另存 PNG」。
 - **講稿風格想改？** 改 `prompts/01_ppt_to_script.md` 規則段，或 `scripts/02_generate_script.py` 的 SYSTEM 常數。
 - **RAM 不夠？** 出圖/影片都用 low 配置（SD 1-step、SVD 14 幀）；建議 ≥16GB。
