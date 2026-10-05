@@ -132,11 +132,12 @@ def push(name=DEFAULT_REPO, branch="main"):
     plain_url = f"https://github.com/{login}/{name}.git"
     subprocess.run(["git", "remote", "remove", "origin"], cwd=ROOT, capture_output=True)
     subprocess.run(["git", "remote", "add", "origin", remote_url], cwd=ROOT, check=True)
+    t0 = time.time()
     try:
-        subprocess.run(["git", "push", "-u", "origin", branch], cwd=ROOT, check=True)
+        subprocess.run(["git", "push", "--progress", "-u", "origin", branch], cwd=ROOT, check=True)
     finally:
         subprocess.run(["git", "remote", "set-url", "origin", plain_url], cwd=ROOT, capture_output=True)
-    print("push 完成: " + plain_url)
+    print(f"push 完成（{time.time()-t0:.1f}s）: " + plain_url)
 
 
 def main():
