@@ -1,0 +1,11 @@
+# SVD（圖→影片）額外套件 — 給「已經有新網路」的環境
+# 安裝:
+#   pip install -r requirements-svd.txt
+# torch 想更乾淨可先裝 CPU 版:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch
+diffusers
+transformers
+safetensors
+peft
+accelerate

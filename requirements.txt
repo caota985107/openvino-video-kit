@@ -1,0 +1,18 @@
+# 公司離線 AI 影片包 — Python 依賴
+# 安裝：pip install -r requirements.txt
+# 無網環境：pip download -d wheels -r requirements.txt（在家）→ 公司 pip install --no-index --find-links wheels -r requirements.txt
+
+# --- 核心（必要）---
+openvino
+openvino-genai
+openvino-tokenizers
+piper-tts
+python-pptx
+huggingface_hub
+numpy
+Pillow
+
+# --- 選配（路線 B / 模型轉檔才需要）---
+# optimum-intel    # 用 optimum 跑 SD 時需要
+# nncf             # 模型量化時需要
+# soundfile        # 若改用其他 TTS（CosyVoice 等）

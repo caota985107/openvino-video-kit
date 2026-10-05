@@ -1,0 +1,20 @@
+# 離線包（bundle）完整套件清單：基礎功能 + SVD 影片（torch 等）
+# 由 tools/bundle_prepare.py（Linux 端）或 windows/make_bundle.ps1（Windows 端）使用。
+
+# --- 基礎（講稿 LLM / 出圖 / TTS / PPT / 合成）---
+openvino
+openvino-genai
+openvino-tokenizers
+piper-tts
+python-pptx
+huggingface_hub
+numpy
+Pillow
+
+# --- SVD 圖→影片（推理）；轉檔也用同一組（在家跑 tools/convert_svd.py）---
+torch
+diffusers
+transformers
+safetensors
+peft
+accelerate

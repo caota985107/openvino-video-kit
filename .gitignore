@@ -1,0 +1,22 @@
+# 大檔／產物
+models/
+bundle/
+dist/
+work/
+*.part
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 凭證／暫存（絕不進版控）
+.gh_token
+.gh_pending.json
+.venv-test/
+
+# 大資產（ffmpeg zip 等；若上傳可行再手動加回）
+assets/*.zip
+assets/*.tar.gz
+assets/uv*.zip

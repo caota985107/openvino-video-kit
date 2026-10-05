@@ -1,0 +1,30 @@
+{
+  "llm_low": {
+    "tier": "low",
+    "repo": "OpenVINO/Qwen3-4B-int4-ov",
+    "dir": "Qwen3-4B-int4-ov",
+    "size_mb": 2291,
+    "use": "講稿生成（低配/較快，CPU int4）"
+  },
+  "llm_high": {
+    "tier": "high",
+    "repo": "OpenVINO/Qwen3-8B-int4-ov",
+    "dir": "Qwen3-8B-int4-ov",
+    "size_mb": 4883,
+    "use": "講稿生成（高配/品質較好）"
+  },
+  "sd_low": {
+    "tier": "low",
+    "repo": "rupeshs/sd-turbo-openvino",
+    "dir": "sd-turbo-openvino",
+    "size_mb": 5167,
+    "use": "出圖 512×512、1 step（低配，約 2–5 秒/張）"
+  },
+  "sd_high": {
+    "tier": "high",
+    "repo": "rupeshs/SDXL-Lightning-2steps-openvino-int8",
+    "dir": "SDXL-Lightning-2steps-openvino-int8",
+    "size_mb": 4756,
+    "use": "出圖 768×768、2 steps（高配，約 10–12 秒/張）"
+  }
+}
