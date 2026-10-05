@@ -128,15 +128,15 @@ def create_repo(name=DEFAULT_REPO):
 def push(name=DEFAULT_REPO, branch="main"):
     token = TOKEN_FILE.read_text().strip()
     login = _api("GET", "/user", token)["login"]
-    remote_url = f"https://x-access-token:{token}@github.com/{login}/{name}.git"
     plain_url = f"https://github.com/{login}/{name}.git"
+    # 用 credential helper 傳 token（不把 token 留在 git config 或 URL）
+    helper = '!f() { echo username=x-access-token; echo "password=${GH_TOKEN}"; }; f'
+    env = {**os.environ, "GH_TOKEN": token}
     subprocess.run(["git", "remote", "remove", "origin"], cwd=ROOT, capture_output=True)
-    subprocess.run(["git", "remote", "add", "origin", remote_url], cwd=ROOT, check=True)
+    subprocess.run(["git", "remote", "add", "origin", plain_url], cwd=ROOT, capture_output=True)
     t0 = time.time()
-    try:
-        subprocess.run(["git", "push", "--progress", "-u", "origin", branch], cwd=ROOT, check=True)
-    finally:
-        subprocess.run(["git", "remote", "set-url", "origin", plain_url], cwd=ROOT, capture_output=True)
+    subprocess.run(["git", "-c", f"credential.helper={helper}", "push", "--progress",
+                    plain_url, f"{branch}:{branch}"], cwd=ROOT, env=env, check=True)
     print(f"push 完成（{time.time()-t0:.1f}s）: " + plain_url)
 
 
